@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  php:
+    build:
+      context: .
+    working_dir: /src
+    ports:
+      - 80:80
+    networks:
+      default:
+        aliases:
+          - php
+    volumes:
+      - ./src:/var/www
+    depends_on:
+      - mariadb
+  mariadb:
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    networks:
+      default:
+        aliases:
+          - db
+networks:
+  default:
